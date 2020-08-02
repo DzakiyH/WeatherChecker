@@ -25,20 +25,35 @@ document.getElementById('w-change-btn').addEventListener('click', (e) => {
     let city = document.getElementById('city').value;
     let state = document.getElementById('state').value;
 
-    city = city.split(" ")[1];
-    state = state.slice(1,3);
+    if(city === 'None' || state === 'None') {
+        // Creating paragraph for the warning
+        const warnUI = document.createElement('p');
+        warnUI.className = 'choose-warning text-danger';
+        warnUI.appendChild(document.createTextNode('Please choose both state and city'));
+        
+        //putting in modal
+        const parentForm = document.getElementById('w-form');
+        parentForm.appendChild(warnUI);
 
-    weather.changeLocation(city, state);
+        setTimeout(() => {
+            document.querySelector('.choose-warning').remove();
+        }, 2000);
+    } else {
+        city = city.split(" ")[1];
+        state = state.slice(1,3);
 
-    // Set Location in LS
-    storage.setLocationData(city, state);
+        weather.changeLocation(city, state);
 
-    // Get and Display Weather
-    const loc = `${city}, ${state}`;
-    getWeather(loc);
+        // Set Location in LS
+        storage.setLocationData(city, state);
 
-    //Close Modal
-    $('#locModal').modal('hide');
+        // Get and Display Weather
+        const loc = `${city}, ${state}`;
+        getWeather(loc);
+
+        //Close Modal
+        $('#locModal').modal('hide');
+    }
 });
 
 function getWeather(loc) {
