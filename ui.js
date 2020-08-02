@@ -10,6 +10,7 @@ class UI {
         this.wind = document.getElementById('w-wind');
     }
 
+    // render the UI for the weather
     paint(weather, currentLoc) {
         this.location.textContent = currentLoc;
         this.desc.textContent = weather.weather[0].description;
@@ -20,6 +21,7 @@ class UI {
         this.wind.textContent = `Wind Speed: ${weather.wind.speed}m/s, Deg: ${weather.wind.deg}\xb0`;
     }
 
+    // giving option for the state in the modal based on iso 3166
     modalState()  {
         let states;
         fetch('iso-3166-2.json')
@@ -35,6 +37,7 @@ class UI {
         });
     }
 
+    // giving option for the city in the modal based on iso 3166
     modalCity(stateName) {
         const selectParent = document.getElementById('city');
         while(selectParent.lastElementChild) {
